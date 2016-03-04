@@ -1,0 +1,11 @@
+*~
+old/
+gifs/
+stateLogs/
+*.txt
+conf.pl
+tweet.new
+tweet.old
+state.svg
+icon.png
+
