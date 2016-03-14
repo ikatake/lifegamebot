@@ -42,6 +42,8 @@ while( my $line = readline($ifh) ){
   if( $column[0] eq 'init'){
     $isInit = 'user';
     $initter = "\@$column[1]";
+    #先着1名様のみとする
+    last;
   }
 }
 close $ifh;

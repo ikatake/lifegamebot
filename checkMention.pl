@@ -42,10 +42,10 @@ foreach my $mention (@{$mentions}){
 		$text =~s/\@_lifegamebot //g;
 		if( $text eq 'init' or $text eq 'いにっと' ){
 		#new指示があったとき、
-			print "init\t${scnm}";
+			print "init\t${scnm}\n";
 		}
 		else{
-			print "comment\t${scnm}\t${text}";
+			print "comment\t${scnm}\t${text}\n";
 		}
 	}
 }
