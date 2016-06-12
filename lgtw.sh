@@ -10,8 +10,6 @@ if [ -s ./status.txt ]; then #status.txtに内容があれば(初期化)、状�
   sh ./makeGif.sh
   perl ./announce.pl ./status.txt > ./tweet.txt
   perl ./makeLogDirNextGene.pl ./status.txt
-  cp -p initMention.txt initMention`date '+%s'`.txt
-  cp -p status.txt status`date '+%s'`.txt
 else #status.txtが空であれば、状態をつぶやく
   perl ./makeSVG.pl ./state.new > ./state.svg
   perl ./saveLog.pl ./state.new ./state.svg
