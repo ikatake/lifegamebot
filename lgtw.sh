@@ -14,6 +14,7 @@ if [ -s ./status.txt ]; then #status.txtに内容があれば(初期化)、状�
   cp -p status.txt status`date '+%s'`.txt
 else #status.txtが空であれば、状態をつぶやく
   perl ./makeSVG.pl ./state.new > ./state.svg
+  perl ./makePNG.pl ./state.new
   perl ./saveLog.pl ./state.new ./state.svg
   perl ./trans.pl ./state.new trans.conf.pl > ./tweet.txt
 fi
