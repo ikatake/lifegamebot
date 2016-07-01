@@ -22,9 +22,9 @@ while( my $line = readline($ifh) ){
 }
 close $ifh;	
 
-$dir = sprintf("./stateLogs/%08d", $gene);
+$dir = sprintf("./pngs/%08d", $gene);
 printf("#!/bin/sh\n");
-printf("/usr/local/bin/convert -delay 10 %s/*.svg /home/ikatake/www/wetsteam/lifegamebot/gifs/%08d.gif\n",$dir ,$gene);
+printf("/usr/local/bin/convert -delay 10 %s/*.png /home/ikatake/www/wetsteam/lifegamebot/gifs/%08d.gif\n",$dir ,$gene);
 #	printf("rm ${dir}/*.svg\n");	
 
 
