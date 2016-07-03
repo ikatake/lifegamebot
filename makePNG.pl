@@ -7,15 +7,18 @@ use warnings;
 use File::Path qw/mkpath/;
 use Compress::Zlib qw/crc32 compress/;
 
-sub PNGCHUNK
+# PNGのデータチャンク用サブルーチン
+# Return: チャンク書き込み用文字列
+# Arg1: チャンク名
+# Arg2: pack済みのチャンクデータ部
+sub PNGCHUNK($$)
 {
 	my($type, $data) = ($_[0], $_[1]);
-	my($result);
 	
 	return pack('NA4A*N', length($data), $type, $data, crc32("$type$data"));
 }
 
-my($statefilename, $targetgene, $targetstep) = ("", 0, 0);
+my($statefilename) = ("");
 $statefilename = decode('utf-8', $ARGV[0]);
 
 die('no text') unless defined($statefilename);
@@ -59,14 +62,13 @@ die('undefined step') if !defined($statestep);
 my($pngbuf); #png data buffer
 $pngbuf  = "\x89PNG\r\n\x1a\n";
 # IHDR/PLTE
-# 暫定でパレット方式(0:白1:黒)の8bitdepth
+# 暫定でパレット方式(0:白,1:黒)の8bitdepth
 $pngbuf .= PNGCHUNK('IHDR', pack('N2C5', $imagewidth, $imageheight, 8, 3, 0, 0, 0));
 $pngbuf .= PNGCHUNK('PLTE', pack('C6', 255,255,255, 0,0,0));
 # IDAT
-# 暫定でフィルタ無し。2でも0の方が軽かった
 my($datbuf) = (""); #data pre-compress buffer
 foreach my $stateline (@statelines) {
-	my($datlinebuf) = pack('C', 0);
+	my($datlinebuf) = pack('C', 0); #フィルタ無し(2で実測してもこちらのほうが軽い)
 	foreach (split(//, $stateline)) {
 		$datlinebuf .= pack('C', $_) x ($imagewidth/$xblock);
 	}
