@@ -2,7 +2,9 @@
 cd $(cd $(dirname $0);pwd) 
 perl ./lg.pl ./state.txt > ./state.new
 perl ./checkMention.pl > initMention.txt
+#初期化メンションを読み取る。
 perl ./checkFrozen.pl ./state.txt ./state.new > ./initFrozen.txt
+#1つ前の状態と比較。固まっているか判定。
 perl ./decideInit.pl  ./state.new ./initMention.txt ./initFrozen.txt > ./status.txt
 #decideInit.plでstate.txtとstatus.txtに書き込む。
 if [ -s ./status.txt ]; then #status.txtに内容があれば(初期化)、状況をつぶやく
