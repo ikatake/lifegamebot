@@ -1,5 +1,5 @@
 import sys
-#import common
+import common
 
 ### ここから本体 ###
 #ループ情報を読み取るファイル
@@ -10,16 +10,7 @@ loop_from:int = 0
 #print('[DBGmakeGifMaker.py]' + file_name)
 
 #ループが確定したgeneration・step・ループ元stepを読み取る。
-with open(file_name, mode='r') as f:
-    s:str = ''
-    for s in f:
-        #print('[DBGmakeGifMaker.py]' + s ,end='')
-        if(s.split('\t')[0] == 'gene'):
-            gene = int(s.split('\t')[1])
-        elif(s.split('\t')[0] == 'step'):
-            step = int(s.split('\t')[1])
-        elif(s.split('\t')[0] == 'loop_from'):
-            loop_from = int(s.split('\t')[1])
+gene, step, loop_from = common.readLoopFile(file_name)
 
 in_arg_pngs:str = './pngs/' + '{:08}/*.png'.format(gene)
 out_arg_gif:str = '/home/ikatake/www/wetsteam/lifegamebot/gifs/'
