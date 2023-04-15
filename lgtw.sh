@@ -1,22 +1,22 @@
 #!/bin/sh
+PATH=$PATH:$HOME/local/python/bin
 cd $(cd $(dirname $0);pwd) 
 perl ./lg.pl ./state.txt > ./state.new
-perl ./checkMention.pl > initMention.txt
-#初期化メンションを読み取る。
-perl ./checkFrozen.pl ./state.txt ./state.new > ./initFrozen.txt
-#1つ前の状態と比較。固まっているか判定。
-perl ./decideInit.pl  ./state.new ./initMention.txt ./initFrozen.txt > ./status.txt
-#decideInit.plでstate.txtとstatus.txtに書き込む。
-if [ -s ./status.txt ]; then #status.txtに内容があれば(初期化)、状況をつぶやく
-  perl ./makeGifMaker.pl ./status.txt > ./makeGif.sh
+python3 isLoop.py ./state.txt ./state.new > ./loop.txt
+if [ -s ./loop.txt ]; then #loop.txtに内容があれば(初期化する)、状況をつぶやく
+  #echo "[DBGtest.sh] INITIALIZE Route. loop.txt:" 
+  #cat  ./loop.txt
+  python3 ./makeGifMaker.py ./loop.txt > ./makeGif.sh
   sh ./makeGif.sh
-  perl ./announce.pl ./status.txt > ./tweet.txt
-  perl ./makeLogDirNextGene.pl ./status.txt
-else #status.txtが空であれば、状態をつぶやく
+  python3 ./announce.py ./loop.txt > ./tweet.txt
+  python3 ./makeLogDirNextGene.py ./loop.txt
+  echo "init" > ./state.new
+else #loop.txtが空であれば、状態をつぶやく
+  #echo "[DBGtest.sh] NORMAL Route"
   perl ./makeSVG.pl ./state.new > ./state.svg
   perl ./makePNG.pl ./state.new
   perl ./saveLog.pl ./state.new ./state.svg
   perl ./trans.pl ./state.new trans.conf.pl > ./tweet.txt
 fi
+python3 ./tweet.py ./tweet.txt
 mv  ./state.new ./state.txt
-perl ./tweet.pl ./tweet.txt
