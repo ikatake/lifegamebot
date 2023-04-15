@@ -16,4 +16,4 @@ with open(file_name) as f:
 response = client.create_tweet(
     text=s
 )
-print(f"https://twitter.com/user/status/{response.data['id']}")
+#print(f"https://twitter.com/user/status/{response.data['id']}")
