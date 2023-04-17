@@ -7,7 +7,7 @@ file_name:str = sys.argv[1]
 next_file_name:str = sys.argv[2]
 #遷移後の状態・generation・stepを読み取る
 next_states, gene, next_step = common.readStateFile(next_file_name)
-if(next_step == 1): #遷移後がステップ1つまり初期化直後の場合は比較対象がないので、
+if(next_step == 0): #遷移後がステップ1つまり初期化直後の場合は比較対象がないので、
     print("", end='') #ループしていない無を出力する。
     sys.exit() #そして終わる。
 
